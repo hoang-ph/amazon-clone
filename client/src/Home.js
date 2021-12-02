@@ -12,7 +12,12 @@ function Home() {
           alt='home'
         />
         <div className='home__row'>
-          <Product />
+          <Product
+            title='Spiderman'
+            price={18.99}
+            image='https://m.media-amazon.com/images/I/71Kwo5V9QOL._AC_SY200_.jpg'
+            rating={5}
+          />
           <Product />
         </div>
 
