@@ -1,3 +1,7 @@
+import { initializeApp } from 'firebase/app';
+import { getFirestore } from 'firebase/firestore';
+import { getAuth } from 'firebase/auth';
+
 const firebaseConfig = {
   apiKey: 'AIzaSyAEAZK1Ojs1qpnhj9UBgwwx3t_R5UmLCrw',
   authDomain: 'challenge-f565e.firebaseapp.com',
@@ -8,4 +12,9 @@ const firebaseConfig = {
   measurementId: 'G-L0RRP2G2VP',
 };
 
-export default firebaseConfig;
+const fireBaseApp = initializeApp(firebaseConfig);
+
+const db = getFirestore(fireBaseApp);
+const auth = getAuth();
+
+export { db, auth };
