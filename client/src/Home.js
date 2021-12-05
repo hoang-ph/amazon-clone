@@ -18,7 +18,6 @@ function Home() {
             image='https://m.media-amazon.com/images/I/71Kwo5V9QOL._AC_SY200_.jpg'
             rating={5}
           />
-          <Product />
         </div>
 
         <div className='home__row'>

@@ -10,7 +10,7 @@ import { onAuthStateChanged } from '@firebase/auth';
 import { auth } from './firebase';
 
 function App() {
-  const [{}, dispatch] = useStateValue();
+  const [, dispatch] = useStateValue();
   useEffect(() => {
     onAuthStateChanged(auth, (authUser) => {
       console.log(`authUser`, authUser);
@@ -26,7 +26,7 @@ function App() {
         });
       }
     });
-  }, []);
+  }, [dispatch]);
 
   return (
     <Router>

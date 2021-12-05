@@ -5,6 +5,7 @@ import { useStateValue } from './StateProvider';
 import Subtotal from './Subtotal';
 
 function Checkout() {
+  // eslint-disable-next-line no-unused-vars
   const [{ basket, user }, dispatch] = useStateValue();
   return (
     <div className='checkout'>
@@ -15,10 +16,11 @@ function Checkout() {
           alt='ad'
         />
         <div>
-          <h3>{user.email}</h3>
+          <h3>Hello, {user?.email}</h3>
           <h2 className='checkout__title'>Your shopping Basket</h2>
-          {basket.map((item) => (
+          {basket.map((item, index) => (
             <CheckoutProduct
+              key={index}
               id={item.id}
               title={item.title}
               image={item.image}

@@ -56,6 +56,7 @@ function Login() {
           <h5>Password</h5>
           <input
             type='password'
+            autoComplete='off'
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
