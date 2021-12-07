@@ -7,11 +7,13 @@ import { CardElement, useStripe, useElements } from '@stripe/react-stripe-js';
 import CurrencyFormat from 'react-currency-format';
 import { getBasketTotal } from './reducer';
 import axios from './axios';
+import { db } from './firebase';
+import { setDoc, doc } from '@firebase/firestore';
 
 function Payment() {
   let navigate = useNavigate();
 
-  const [{ basket, user }] = useStateValue();
+  const [{ basket, user }, dispatch] = useStateValue();
 
   const stripe = useStripe();
   const elements = useElements();
@@ -25,12 +27,12 @@ function Payment() {
   useEffect(() => {
     // generate the special stripe secret which allows charging a customer
     const getClientSecret = async () => {
+      const totalAmount = getBasketTotal(basket);
+      if (totalAmount === 0) return;
       const response = await axios({
         method: 'post',
         // Stripe expects the total in a currencies subunits
-        url: `/payments/create?total=${Math.round(
-          getBasketTotal(basket) * 100
-        )}`,
+        url: `/payments/create?total=${Math.round(totalAmount * 100)}`,
       });
       setClientSecret(response.data.clientSecret);
     };
@@ -40,16 +42,33 @@ function Payment() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setProcessing(true);
-    const payload = await stripe
+    await stripe
       .confirmCardPayment(clientSecret, {
         payment_method: {
           card: elements.getElement(CardElement),
         },
       })
       .then(({ paymentIntent }) => {
+        const ordersRef = doc(
+          db,
+          'users',
+          user?.uid,
+          'orders',
+          paymentIntent.id
+        );
+        setDoc(ordersRef, {
+          basket: basket,
+          amount: paymentIntent.amount,
+          created: paymentIntent.created,
+        });
+
         setSucceeded(true);
         setProcessing(false);
         setError(null);
+        dispatch({
+          type: 'EMPTY_BASKET',
+        });
+
         navigate('/orders', { replace: true });
       });
   };
