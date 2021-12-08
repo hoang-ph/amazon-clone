@@ -1,13 +1,13 @@
-import React, { useEffect, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import CheckoutProduct from './CheckoutProduct';
+import React, { useState, useEffect } from 'react';
 import './Payment.css';
-import { useStateValue } from './StateProvider';
+import { useStateValue } from '../StateProvider';
+import CheckoutProduct from './CheckoutProduct';
+import { Link, useNavigate } from 'react-router-dom';
 import { CardElement, useStripe, useElements } from '@stripe/react-stripe-js';
 import CurrencyFormat from 'react-currency-format';
-import { getBasketTotal } from './reducer';
-import axios from './axios';
-import { db } from './firebase';
+import { getBasketTotal } from '../reducer';
+import axios from '../apis/axios';
+import { db } from '../apis/firebase';
 import { setDoc, doc } from '@firebase/firestore';
 
 function Payment() {
@@ -70,7 +70,8 @@ function Payment() {
         });
 
         navigate('/orders', { replace: true });
-      });
+      })
+      .catch((e) => console.warm(e.message));
   };
 
   const handleChange = (e) => {

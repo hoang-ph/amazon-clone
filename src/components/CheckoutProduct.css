@@ -4,6 +4,10 @@
   margin-bottom: 20px;
 }
 
+.checkoutProduct:hover {
+  box-shadow: 4px 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
 .checkoutProduct__info {
   padding-left: 20px;
 }
@@ -29,4 +33,14 @@
 .checkoutProduct__title {
   font-size: 17px;
   font-weight: 800;
+}
+
+.checkoutProduct__info > button:hover {
+  background-color: #f0bf43;
+}
+
+.checkoutProduct__info > button:active {
+  background-color: #f0bf43;
+  box-shadow: 0 2px #725919;
+  transform: translateY(1px);
 }
